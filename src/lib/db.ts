@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const dbName = "shadcn-ui";
+const dbName = "quick-hire";
 const env = process.env.NODE_ENV;
 const uri = process.env.MONGODB_URI;
 
