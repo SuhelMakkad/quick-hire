@@ -3,3 +3,5 @@ export const formateCurrency = (amount: number) =>
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(amount);
+
+export const formateDate = (date: string | number) => new Date(date).toLocaleDateString();

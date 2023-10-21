@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { getJobDetailsRoute } from "@/utils/routes";
-import { formateCurrency } from "@/utils/index";
+import { formateCurrency, formateDate } from "@/utils/index";
 import type { Job } from "@/utils/type";
 
 export type CardProps = {
@@ -14,7 +14,7 @@ const Card = ({ job }: CardProps) => {
       <article className="md:text-base text-sm border shadow-sm px-3.5 py-3 hover:shadow transition-shadow">
         <div className="flex items-center justify-between">
           <span className="font-medium">{job.title}</span>
-          <span className="text-xs md:text-sm">{new Date(job.createdAt).toLocaleDateString()}</span>
+          <span className="text-xs md:text-sm">{formateDate(job.createdAt)}</span>
         </div>
 
         <div className="flex items-center md:gap-2 gap-1.5 text-xs md:text-sm mt-1">
