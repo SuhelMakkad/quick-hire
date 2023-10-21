@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { getJobApplyRoute } from "@/utils/routes";
-import type { Job } from "@/utils/type";
+import { CommitIcon, SewingPinIcon, PersonIcon } from "@radix-ui/react-icons";
 import ApplicationForm from "./components/application-form";
+
+import type { Job } from "@/utils/type";
+import { formateCurrency } from "@/utils/index";
 
 export type JobDetailsPageProps = {
   params: {
@@ -37,6 +38,31 @@ const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
       </header>
 
       <section>
+        <h2 className="text-sm md:text-base font-medium mb-1.5">Basic Details</h2>
+        <ul className="text-xs md:text-sm capitalize flex flex-col gap-1">
+          <li className="flex items-center gap-1">
+            <SewingPinIcon />
+            <span>Location: </span>
+            <span className="font-medium">{job.locations.join(", ")}</span>
+          </li>
+          <li className="flex items-center gap-1">
+            <CommitIcon />
+            <span>Pay Range: </span>
+            <span className="font-medium">
+              {formateCurrency(job.minSalary)} to {formateCurrency(job.maxSalary)}
+            </span>
+          </li>
+          <li className="flex items-center gap-1">
+            <PersonIcon />
+            <span>Required Experience: </span>
+            <span className="font-medium">
+              {job.minExperience} to {job.maxExperience} years
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section>
         <div
           className="md:prose-base prose prose-sm max-w-full prose-a:underline"
           dangerouslySetInnerHTML={{ __html: job.description }}
@@ -53,6 +79,7 @@ const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
       </section>
 
       <section>
+        <h2 className="md:text-lg font-medium mb-2">Submit your application</h2>
         <ApplicationForm jobId={job.id} />
       </section>
     </main>
