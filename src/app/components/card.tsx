@@ -11,7 +11,7 @@ export type CardProps = {
 const Card = ({ job }: CardProps) => {
   return (
     <Link href={getJobDetailsRoute(job.id)}>
-      <article className="md:text-base text-sm border shadow-sm px-3.5 py-3 hover:shadow transition-shadow">
+      <article className="md:text-base text-sm border shadow-sm px-3.5 py-3 hover:shadow transition-shadow bg-card rounded-md">
         <div className="flex items-center justify-between">
           <span className="font-medium">{job.title}</span>
           <span className="text-xs md:text-sm">{formateDate(job.createdAt)}</span>
