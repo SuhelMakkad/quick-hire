@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import Navbar from "@/components/nav-bar";
+import { ThemeProvider } from "./components/theme-provider";
 import { QueryProvider } from "./components/query-client";
 
 import { cn } from "@/utils/ui";
@@ -19,8 +20,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={cn(inter.className, "bg-background text-primary antialiased")}>
         <QueryProvider>
-          <Navbar />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            {children}
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>
