@@ -28,7 +28,7 @@ const jobs: Job[] = [
     minSalary: 90_000,
     maxSalary: 150_000,
     categories: ["frontend"],
-    locations: ["bangalore, chennai"],
+    locations: ["bangalore", "chennai"],
   },
 ];
 

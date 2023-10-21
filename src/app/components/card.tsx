@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Chip from "@/components/ui/chip";
 
 import { getJobDetailsRoute } from "@/utils/routes";
 import { formateCurrency, formateDate } from "@/utils/index";
 import type { Job } from "@/utils/type";
+import { SewingPinIcon } from "@radix-ui/react-icons";
 
 export type CardProps = {
   job: Job;
@@ -19,10 +21,11 @@ const Card = ({ job }: CardProps) => {
 
         <div className="flex items-center md:gap-2 gap-1.5 text-xs md:text-sm mt-1">
           <span>
-            $ {formateCurrency(job.minSalary)} - {formateCurrency(job.maxSalary)},
+            $ {formateCurrency(job.minSalary)} - {formateCurrency(job.maxSalary)}
           </span>
           <div className="flex items-center gap-0.5 capitalize">
-            <span>{job.locations.join(" • ")}</span>
+            <SewingPinIcon />
+            <span>{job.locations.join(", ")}</span>
           </div>
         </div>
 
@@ -41,7 +44,3 @@ const Card = ({ job }: CardProps) => {
 };
 
 export default Card;
-
-const Chip = ({ children }: React.PropsWithChildren) => {
-  return <span className="border rounded-full px-2.5 py-1 bg-muted border-input">{children}</span>;
-};
