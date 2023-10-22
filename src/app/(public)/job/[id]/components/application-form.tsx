@@ -144,7 +144,7 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
-              <FormLabel>Contact for future opportunities</FormLabel>
+              <FormLabel className="font-normal">Contact for future opportunities</FormLabel>
             </FormItem>
           )}
         />

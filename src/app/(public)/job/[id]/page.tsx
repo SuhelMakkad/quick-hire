@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { CommitIcon, SewingPinIcon, PersonIcon } from "@radix-ui/react-icons";
-import ApplicationForm from "./components/application-form";
 import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
+import Chip from "@/components/ui/chip";
+import ApplicationForm from "./components/application-form";
 
 import { formateCurrency } from "@/utils/index";
 import { getJobDetails } from "@/lib/getJobDetails";
@@ -52,10 +53,18 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
           </span>
         </div>
 
-        <Link href={"#apply"} className={buttonVariants({ variant: "secondary", size: "sm" })}>
+        <Link href={"#apply"} className={buttonVariants({ variant: "outline", size: "sm" })}>
           Apply Now
         </Link>
       </header>
+
+      <ul className="flex items-center gap-2 text-xs capitalize mt-3 md:mt-2.5">
+        {job.categories.map((category) => (
+          <li key={category.label}>
+            <Chip>{category.label}</Chip>
+          </li>
+        ))}
+      </ul>
 
       <section>
         <h2 className="text-sm md:text-base font-medium mb-1.5">Basic Details</h2>
