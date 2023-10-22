@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { getJobApplyRoute } from "@/utils/routes";
 
 export type ApplicationForm = { jobId: string };
 const ApplicationForm = ({ jobId }: ApplicationForm) => {
