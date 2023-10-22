@@ -1,18 +1,36 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
 import { CommitIcon, SewingPinIcon, PersonIcon } from "@radix-ui/react-icons";
 import ApplicationForm from "./components/application-form";
+import { Separator } from "@/components/ui/separator";
+import { buttonVariants } from "@/components/ui/button";
 
 import { formateCurrency } from "@/utils/index";
-import { Separator } from "@/components/ui/separator";
 import { getJobDetails } from "@/lib/getJobDetails";
-import { notFound } from "next/navigation";
-import { buttonVariants } from "@/components/ui/button";
 
 export type JobDetailsPageProps = {
   params: {
     id: string;
   };
 };
+
+export const dynamicParams = true;
+
+export async function generateMetadata({ params }: JobDetailsPageProps) {
+  const { id: jobId } = params;
+  const job = await getJobDetails(jobId);
+
+  if (!job) return;
+
+  const metadata: Metadata = {
+    title: `Quick Hire - ${job.title}`,
+    description: job.shortDescription,
+  };
+
+  return metadata;
+}
 
 const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
   const { id: jobId } = params;
