@@ -5,6 +5,7 @@ import { getJobDetailsRoute } from "@/utils/routes";
 import { formateCurrency, formateDate } from "@/utils/index";
 import { SewingPinIcon } from "@radix-ui/react-icons";
 import type { JobWithId } from "@/utils/schema";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type CardProps = {
   job: Omit<JobWithId, "description">;
@@ -48,3 +49,20 @@ const Card = ({ job }: CardProps) => {
 };
 
 export default Card;
+
+export const LoadingCard = () => {
+  return (
+    <div className="h-28 border shadow-sm px-3.5 py-3 hover:shadow transition-shadow bg-card rounded-md flex flex-col">
+      <div>
+        <div className="flex gap-2 items-start justify-between">
+          <Skeleton className="h-4 w-56" />
+          <Skeleton className="h-4 w-20" />
+        </div>
+
+        <Skeleton className="h-3 w-36 mt-2" />
+      </div>
+
+      <Skeleton className="h-4 w-72 mb-1 mt-auto" />
+    </div>
+  );
+};

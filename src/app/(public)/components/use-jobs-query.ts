@@ -8,10 +8,8 @@ const jobsPerReq = 12;
 export const useJobsQuery = () => {
   return useInfiniteQuery({
     queryKey: ["jobs"],
-    initialPageParam: 1,
-    queryFn: ({ pageParam = 1 }) => {
-      return getJobs(jobsPerReq, (pageParam - 1) * jobsPerReq);
-    },
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) => getJobs(jobsPerReq, pageParam * jobsPerReq),
     getNextPageParam: (lastPage, page) => {
       if (!lastPage || lastPage.length < jobsPerReq) {
         return;
