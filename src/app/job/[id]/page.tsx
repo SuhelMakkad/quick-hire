@@ -4,6 +4,7 @@ import ApplicationForm from "./components/application-form";
 
 import type { Job } from "@/utils/type";
 import { formateCurrency } from "@/utils/index";
+import { Separator } from "@/components/ui/separator";
 
 export type JobDetailsPageProps = {
   params: {
@@ -29,7 +30,7 @@ const job: Job = {
 const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
   const { id: jobId } = params;
   return (
-    <main className="container space-y-4 md:space-y-5">
+    <main className="container space-y-4 md:space-y-5 max-w-4xl">
       <header>
         <h1 className="font-medium text-xl md:text-2xl">{job.title}</h1>
         <span className="text-xs md:text-sm flex items-center gap-1 capitalize">
@@ -71,15 +72,17 @@ const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
         <p className="md:prose-base prose prose-sm max-w-full mt-5">
           *Accommodations may be available based on religious and/or medical conditions, or as
           required by applicable law. To request an accommodation, please reach out to{" "}
-          <Link className="underline" href={"mailto:accommodations@quick-hire.suhelmakkad.com"}>
-            accommodations@quick-hire.com
+          <Link className="underline" href={"mailto:makadsuhel11@gmail.com"}>
+            makadsuhel11@gmail.com
           </Link>
           .
         </p>
       </section>
 
-      <section>
-        <h2 className="md:text-lg font-medium mb-2">Submit your application</h2>
+      <Separator />
+
+      <section className="max-w-lg mx-auto">
+        <h2 className="font-medium md:mb-3 mb-4">Submit your application</h2>
         <ApplicationForm jobId={job.id} />
       </section>
     </main>
