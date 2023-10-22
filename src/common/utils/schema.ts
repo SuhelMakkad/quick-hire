@@ -17,6 +17,6 @@ export const jobSchema = z.object({
   maxExperience: z.coerce.number(coerceNumberError).min(0).max(30),
   minSalary: z.coerce.number(coerceNumberError).min(0),
   maxSalary: z.coerce.number(coerceNumberError).min(0),
-  categories: z.array(z.string()),
-  locations: z.array(z.string()),
+  categories: z.array(z.object({ label: z.string().optional() })),
+  locations: z.array(z.object({ label: z.string().optional() })),
 });

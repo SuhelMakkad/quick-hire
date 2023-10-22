@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import Link from "next/link";
+
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
@@ -20,9 +22,8 @@ import { useToast } from "@/components/ui/toast/use-toast";
 
 import { jobSchema, type JobSchema } from "@/utils/schema";
 import { addJobPost } from "@/utils/api";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus, Trash } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
-import Link from "next/link";
 import { getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
 
 export type CreateJobFormProps = { jobId: string };
@@ -31,17 +32,37 @@ const defaultValues = {
   title: "",
   shortDescription: "",
   description: `<h2>About the Role</h2><h2><strong>What you'll do</strong></h2><h2><strong>What you'll need</strong></h2><p>&nbsp;</p><p>*Accommodations may be available based on religious and/or medical conditions, or as required by applicable law. To request an accommodation, please reach out to <a href="mailto:makadsuhel11@gmail.com">makadsuhel11@gmail.com</a>.</p>`,
-  categories: [],
-  locations: [],
+  categories: [{ label: "" }],
+  locations: [{ label: "" }],
 };
 
 const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const { toast } = useToast();
   const router = useRouter();
+
   const form = useForm<JobSchema>({
     resolver: zodResolver(jobSchema),
     defaultValues: defaultValues,
+  });
+
+  const {
+    fields: categoryFields,
+    append: appendCategory,
+    remove: removeCategory,
+  } = useFieldArray({
+    name: "categories",
+    control: form.control,
+  });
+
+  const {
+    fields: locationFields,
+    append: appendLocation,
+    remove: removeLocation,
+  } = useFieldArray({
+    name: "locations",
+    control: form.control,
   });
 
   const onSubmit = async (data: JobSchema) => {
@@ -107,7 +128,7 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
             <FormItem className="col-span-2">
               <FormLabel>Min Salary</FormLabel>
               <FormControl>
-                <Input placeholder="750000" type="number" {...field} />
+                <Input placeholder="75000" type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -155,6 +176,79 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
             </FormItem>
           )}
         />
+
+        <FormItem className="col-span-4">
+          <FormLabel className="flex items-center gap-2">
+            Categories
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              className="h-6 w-6"
+              onClick={() => appendCategory({ label: "" })}
+            >
+              <Plus className="w-3.5" />
+            </Button>
+          </FormLabel>
+          {categoryFields.map((field, index) => (
+            <div key={field.id} className="flex items-center gap-1">
+              <Input
+                placeholder="example.com"
+                className="grow"
+                {...form.register(`categories.${index}.label`)}
+              />
+              {index > 0 && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  className="shrink-0 w-8 h-8"
+                  size="icon"
+                  onClick={() => removeCategory(index)}
+                >
+                  <Trash className="w-4" />
+                </Button>
+              )}
+            </div>
+          ))}
+          <FormMessage />
+        </FormItem>
+
+        <FormItem className="col-span-4">
+          <FormLabel className="flex items-center gap-2">
+            Locations
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              className="h-6 w-6"
+              onClick={() => appendLocation({ label: "" })}
+            >
+              <Plus className="w-3.5" />
+            </Button>
+          </FormLabel>
+
+          {locationFields.map((field, index) => (
+            <div key={field.id} className="flex items-center gap-1">
+              <Input
+                placeholder="New York"
+                className="grow"
+                {...form.register(`locations.${index}.label`)}
+              />
+              {index > 0 && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  className="shrink-0 w-8 h-8"
+                  size="icon"
+                  onClick={() => removeLocation(index)}
+                >
+                  <Trash className="w-4" />
+                </Button>
+              )}
+            </div>
+          ))}
+          <FormMessage />
+        </FormItem>
 
         <FormField
           control={form.control}
