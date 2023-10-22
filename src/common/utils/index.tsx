@@ -5,3 +5,5 @@ export const formateCurrency = (amount: number) =>
   }).format(amount);
 
 export const formateDate = (date: string | number) => new Date(date).toLocaleDateString();
+
+export const safeCastNumber = (str?: string | null, defaultNum = 0) => +(str ?? "") || defaultNum;

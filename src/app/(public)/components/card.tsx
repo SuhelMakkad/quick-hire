@@ -3,11 +3,11 @@ import Chip from "@/components/ui/chip";
 
 import { getJobDetailsRoute } from "@/utils/routes";
 import { formateCurrency, formateDate } from "@/utils/index";
-import type { Job } from "@/utils/type";
 import { SewingPinIcon } from "@radix-ui/react-icons";
+import type { JobWithId } from "@/utils/schema";
 
 export type CardProps = {
-  job: Job;
+  job: Omit<JobWithId, "description">;
 };
 
 const Card = ({ job }: CardProps) => {

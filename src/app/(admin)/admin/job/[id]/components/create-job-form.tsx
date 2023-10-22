@@ -169,7 +169,7 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
           )}
         />
 
-        <Button type="submit" disabled={isLoading} className="col-span-4 md:ml-auto">
+        <Button type="submit" disabled={isLoading} className="col-span-4 md:ml-auto mb-4">
           Create new post
           {isLoading && <Loader2 className="animate-spin w-4 ml-2" />}
         </Button>
