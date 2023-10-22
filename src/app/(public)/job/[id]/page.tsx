@@ -2,9 +2,10 @@ import Link from "next/link";
 import { CommitIcon, SewingPinIcon, PersonIcon } from "@radix-ui/react-icons";
 import ApplicationForm from "./components/application-form";
 
-import type { Job } from "@/utils/type";
 import { formateCurrency } from "@/utils/index";
 import { Separator } from "@/components/ui/separator";
+import { getJobDetails } from "@/lib/getJobDetails";
+import { notFound } from "next/navigation";
 
 export type JobDetailsPageProps = {
   params: {
@@ -12,23 +13,14 @@ export type JobDetailsPageProps = {
   };
 };
 
-const job: Job = {
-  id: "2",
-  title: "Title 2",
-  description:
-    "<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis eaque doloremque at deleniti inventore modi ut vero odio? Blanditiis, cumque veniam laboriosam quidem totam quis dignissimos sed dolorem tempora harum.</p> <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis eaque doloremque at deleniti inventore modi ut vero odio? Blanditiis, cumque veniam laboriosam quidem totam quis dignissimos sed dolorem tempora harum.</p>",
-  shortDescription: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-  createdAt: new Date().toISOString(),
-  minExperience: 2,
-  maxExperience: 4,
-  minSalary: 90_000,
-  maxSalary: 150_000,
-  categories: ["frontend"],
-  locations: ["bangalore", "chennai"],
-};
-
-const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
+const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
   const { id: jobId } = params;
+  const job = await getJobDetails(jobId);
+
+  if (!job) {
+    notFound();
+  }
+
   return (
     <main className="container space-y-4 md:space-y-5 max-w-4xl">
       <header>
@@ -65,18 +57,9 @@ const JobDetailsPage = ({ params }: JobDetailsPageProps) => {
 
       <section>
         <div
-          className="md:prose-base prose prose-sm max-w-full prose-a:underline"
+          className="prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium max-w-full"
           dangerouslySetInnerHTML={{ __html: job.description }}
         />
-
-        <p className="md:prose-base prose prose-sm max-w-full mt-5">
-          *Accommodations may be available based on religious and/or medical conditions, or as
-          required by applicable law. To request an accommodation, please reach out to{" "}
-          <Link className="underline" href={"mailto:makadsuhel11@gmail.com"}>
-            makadsuhel11@gmail.com
-          </Link>
-          .
-        </p>
       </section>
 
       <Separator />
