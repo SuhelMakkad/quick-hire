@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -22,7 +23,7 @@ import { addJobPost } from "@/utils/api";
 import { Loader2 } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
-import { getJobDetailsRoute } from "@/utils/routes";
+import { getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
 
 export type CreateJobFormProps = { jobId: string };
 
@@ -37,6 +38,7 @@ const defaultValues = {
 const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<JobSchema>({
     resolver: zodResolver(jobSchema),
     defaultValues: defaultValues,
@@ -46,6 +48,7 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
     setIsLoading(true);
     const res = await addJobPost(data);
     setIsLoading(false);
+
     if (res.status === "success") {
       toast({
         title: "New Job Post Published!",
@@ -57,6 +60,8 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
           </ToastAction>
         ),
       });
+
+      router.replace(getEditJobPostRoute(res.jobId));
       return;
     }
 
@@ -159,7 +164,7 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <RichTextEditor
-                  className="max-h-96 overflow-auto border border-input"
+                  className="border border-input"
                   value={field.value}
                   setValue={field.onChange}
                 />

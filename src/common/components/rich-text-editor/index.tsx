@@ -4,6 +4,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { cn } from "@/utils/ui";
+import "./styles.css";
 
 export type RichTextEditorProps = {
   className?: string;
@@ -41,7 +42,7 @@ const RichTextEditor = ({ className, value, setValue }: RichTextEditorProps) => 
   return (
     <div
       className={cn(
-        "prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base dark:prose-invert prose-headings:text-sm prose-strong:font-medium",
+        "ck-editor bg-card prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base dark:prose-invert prose-headings:text-sm prose-strong:font-medium",
         className
       )}
     >

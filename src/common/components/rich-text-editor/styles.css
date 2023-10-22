@@ -1,0 +1,38 @@
+:root *,
+.ck-editor {
+  --ck-focus-outer-shadow: transparent;
+
+  --ck-powered-by-text-color: hsl(var(--primary-foreground));
+  --ck-powered-by-background: hsl(var(--background));
+
+  --ck-color-selector-caption-background: hsl(var(--background));
+  --ck-color-selector-caption-text: hsl(var(--primary-foreground));
+  --ck-table-selected-cell-background: hsl(var(--card));
+
+  --ck-color-toolbar-border: hsl(var(--input));
+  --ck-color-base-foreground: hsl(var(--primary-foreground));
+  --ck-color-toolbar-background: hsl(var(--background));
+  --ck-color-base-background: hsl(var(--background));
+  --ck-color-base-border: hsl(var(--input));
+  --ck-color-input-border: hsl(var(--input));
+  --ck-color-text: hsl(var(--ck-color-base-text));
+
+  --ck-color-dropdown-panel-background: var(--ck-color-base-background);
+  --ck-color-dropdown-panel-border: var(--ck-color-toolbar-border);
+  --ck-color-list-background: hsl(var(--background));
+  --ck-color-list-button-hover-background: hsl(var(--accent));
+
+  --ck-color-panel-background: hsl(var(--card));
+  --ck-color-panel-border: hsl(var(--input));
+
+  --ck-color-input-background: transparent;
+  --ck-color-labeled-field-label-background: hsl(var(--background));
+
+  --ck-color-button-default-hover-background: hsl(var(--accent));
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-active-background: hsl(var(--accent));
+  --ck-color-button-on-background: hsl(var(--accent));
+  --ck-color-button-on-hover-background: hsl(var(--accent));
+  --ck-color-button-on-active-background: hsl(var(--accent));
+  --ck-color-button-on-disabled-background: hsl(var(--muted));
+}
