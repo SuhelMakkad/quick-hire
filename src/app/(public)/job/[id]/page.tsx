@@ -6,6 +6,7 @@ import { formateCurrency } from "@/utils/index";
 import { Separator } from "@/components/ui/separator";
 import { getJobDetails } from "@/lib/getJobDetails";
 import { notFound } from "next/navigation";
+import { buttonVariants } from "@/components/ui/button";
 
 export type JobDetailsPageProps = {
   params: {
@@ -22,12 +23,18 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
   }
 
   return (
-    <main className="container space-y-4 md:space-y-5 max-w-4xl">
-      <header>
-        <h1 className="font-medium text-xl md:text-2xl">{job.title}</h1>
-        <span className="text-xs md:text-sm flex items-center gap-1 capitalize">
-          {job.shortDescription}
-        </span>
+    <main className="container space-y-4 md:space-y-5 max-w-4xl mb-8">
+      <header className="flex items-center gap-2 justify-between">
+        <div>
+          <h1 className="font-medium text-xl md:text-2xl">{job.title}</h1>
+          <span className="text-xs md:text-sm flex items-center gap-1 capitalize">
+            {job.shortDescription}
+          </span>
+        </div>
+
+        <Link href={"#apply"} className={buttonVariants({ variant: "secondary", size: "sm" })}>
+          Apply Now
+        </Link>
       </header>
 
       <section>
@@ -64,7 +71,7 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
 
       <Separator />
 
-      <section className="max-w-lg mx-auto">
+      <section id="apply" className="max-w-lg mx-auto scroll-mt-8">
         <h2 className="font-medium md:mb-3 mb-4">Submit your application</h2>
         <ApplicationForm jobId={job.id} />
       </section>
