@@ -41,7 +41,7 @@ const RichTextEditor = ({ className, value, setValue }: RichTextEditorProps) => 
   return (
     <div
       className={cn(
-        "prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium",
+        "prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base dark:prose-invert prose-headings:text-sm prose-strong:font-medium",
         className
       )}
     >

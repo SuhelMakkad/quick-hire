@@ -82,7 +82,7 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
 
       <section>
         <div
-          className="prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium max-w-full"
+          className="prose prose-sm md:prose-base dark:prose-invert prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium max-w-full"
           dangerouslySetInnerHTML={{ __html: job.description }}
         />
       </section>
