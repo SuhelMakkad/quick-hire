@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import type {} from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+import { cn } from "@/utils/ui";
+
 export type RichTextEditorProps = {
+  className?: string;
   value: string;
   setValue: (val: string) => void;
 };
@@ -37,9 +37,14 @@ const config: React.ComponentProps<typeof CKEditor>["config"] = {
   ],
 };
 
-const RichTextEditor = ({ value, setValue }: RichTextEditorProps) => {
+const RichTextEditor = ({ className, value, setValue }: RichTextEditorProps) => {
   return (
-    <div className="prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium">
+    <div
+      className={cn(
+        "prose prose-sm md:prose-base prose-headings:font-medium md:prose-headings:text-base prose-headings:text-sm prose-strong:font-medium",
+        className
+      )}
+    >
       <CKEditor
         editor={ClassicEditor}
         config={config}

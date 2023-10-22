@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import Navbar from "@/components/nav-bar";
 import { ThemeProvider } from "./components/theme-provider";
 import { QueryProvider } from "./components/query-client";
+import { Toaster } from "@/components/ui/toast/toaster";
 
 import { cn } from "@/utils/ui";
 import "./globals.css";
@@ -27,6 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             disableTransitionOnChange
           >
             {children}
+
+            <Toaster />
           </ThemeProvider>
         </QueryProvider>
       </body>

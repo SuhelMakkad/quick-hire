@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,24 +15,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import RichTextEditor from "@/components/rich-text-editor";
+import { useToast } from "@/components/ui/toast/use-toast";
 
-const coerceNumberError = { invalid_type_error: "Must be a valid number" };
-
-const formSchema = z.object({
-  title: z.string().min(2).max(50),
-  shortDescription: z.string().min(20),
-  description: z.string().min(20),
-  minExperience: z.coerce.number(coerceNumberError),
-  maxExperience: z.coerce.number(coerceNumberError).min(0).max(30),
-  minSalary: z.coerce.number(coerceNumberError).min(0),
-  maxSalary: z.coerce.number(coerceNumberError).min(0),
-  categories: z.array(z.string()),
-  locations: z.array(z.string()),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
+import { jobSchema, type JobSchema } from "@/utils/schema";
+import { addJobPost } from "@/utils/api";
+import { Loader2 } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast";
+import Link from "next/link";
+import { getJobDetailsRoute } from "@/utils/routes";
 
 export type CreateJobFormProps = { jobId: string };
+
 const defaultValues = {
   title: "",
   shortDescription: "",
@@ -42,12 +35,32 @@ const defaultValues = {
 };
 
 const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const form = useForm<JobSchema>({
+    resolver: zodResolver(jobSchema),
     defaultValues: defaultValues,
   });
 
-  const onSubmit = (data: FormSchema) => {
+  const onSubmit = async (data: JobSchema) => {
+    setIsLoading(true);
+    const res = await addJobPost(data);
+    setIsLoading(false);
+    if (res.status === "success") {
+      toast({
+        title: "New Job Post Published!",
+        action: (
+          <ToastAction altText="See New Job">
+            <Link href={getJobDetailsRoute(res.jobId)} target="_blank">
+              Visit Page
+            </Link>
+          </ToastAction>
+        ),
+      });
+      return;
+    }
+
+    // tost error return
     console.log(data);
   };
 
@@ -145,15 +158,20 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
             <FormItem className="col-span-4">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <RichTextEditor value={field.value} setValue={field.onChange} />
+                <RichTextEditor
+                  className="max-h-96 overflow-auto border border-input"
+                  value={field.value}
+                  setValue={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="col-span-4 md:ml-auto">
+        <Button type="submit" disabled={isLoading} className="col-span-4 md:ml-auto">
           Create new post
+          {isLoading && <Loader2 className="animate-spin w-4 ml-2" />}
         </Button>
       </form>
     </Form>
