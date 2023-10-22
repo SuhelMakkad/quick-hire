@@ -10,10 +10,10 @@ const JobEditPage = ({ params }: JobEditPageProps) => {
   const { id: jobId } = params;
 
   return (
-    <main className="container">
+    <main className="container max-w-2xl mx-auto">
       <h1 className="font-medium text-lg md:text-xl mb-4">Add a New Job</h1>
 
-      <div className="max-w-2xl mx-auto">
+      <div>
         <CreateJobForm jobId={jobId} />
       </div>
     </main>
