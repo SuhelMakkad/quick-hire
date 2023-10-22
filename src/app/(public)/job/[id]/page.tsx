@@ -40,6 +40,8 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
     notFound();
   }
 
+  const locations = job.locations?.map((l) => l.label).join(", ");
+
   return (
     <main className="container space-y-4 md:space-y-5 max-w-4xl mb-8">
       <header className="flex items-center gap-2 justify-between">
@@ -58,11 +60,13 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
       <section>
         <h2 className="text-sm md:text-base font-medium mb-1.5">Basic Details</h2>
         <ul className="text-xs md:text-sm capitalize flex flex-col gap-1">
-          <li className="flex items-center gap-1">
-            <SewingPinIcon />
-            <span>Location: </span>
-            <span className="font-medium">{job.locations.join(", ")}</span>
-          </li>
+          {!!locations && (
+            <li className="flex items-center gap-1">
+              <SewingPinIcon />
+              <span>Location: </span>
+              <span className="font-medium">{locations}</span>
+            </li>
+          )}
           <li className="flex items-center gap-1">
             <CommitIcon />
             <span>Pay Range: </span>

@@ -11,6 +11,8 @@ export type CardProps = {
 };
 
 const Card = ({ job }: CardProps) => {
+  const locations = job.locations?.map((l) => l.label).join(", ");
+
   return (
     <Link href={getJobDetailsRoute(job.id)}>
       <article className="md:text-base text-sm border shadow-sm px-3.5 py-3 hover:shadow transition-shadow bg-card rounded-md">
@@ -23,16 +25,18 @@ const Card = ({ job }: CardProps) => {
           <span>
             $ {formateCurrency(job.minSalary)} - {formateCurrency(job.maxSalary)}
           </span>
-          <div className="flex items-center gap-0.5 capitalize">
-            <SewingPinIcon />
-            <span>{job.locations.join(", ")}</span>
-          </div>
+          {!!locations && (
+            <div className="flex items-center gap-0.5 capitalize">
+              <SewingPinIcon />
+              <span>{locations}</span>
+            </div>
+          )}
         </div>
 
         <ul className="flex items-center gap-2 text-xs capitalize mt-3 md:mt-2.5">
           {job.categories.map((category) => (
-            <li key={category}>
-              <Chip>{category}</Chip>
+            <li key={category.label}>
+              <Chip>{category.label}</Chip>
             </li>
           ))}
         </ul>
