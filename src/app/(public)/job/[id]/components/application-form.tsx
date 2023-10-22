@@ -29,8 +29,9 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-export type ApplicationForm = { jobId: string };
-const ApplicationForm = ({ jobId }: ApplicationForm) => {
+export type ApplicationFormProps = { jobId: string };
+
+const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
