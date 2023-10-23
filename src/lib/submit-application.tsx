@@ -1,7 +1,8 @@
 import { v4 as uuid } from "uuid";
 import { getDb } from "./db";
-import type { Application, ProfileSchemaServer } from "@/utils/schema";
 import { uploadFile } from "./s3";
+import { getResumeS3Path, s3BaseUrl } from "@/utils/routes";
+import type { ProfileSchemaServer } from "@/utils/schema";
 
 export const submitApplication = async (profile: ProfileSchemaServer) => {
   const db = await getDb();
@@ -14,7 +15,12 @@ export const submitApplication = async (profile: ProfileSchemaServer) => {
   }
 
   const id = uuid();
-  const filePath = `${profile.jobId}/${profile.email}/${id}__${profile.resume.name}`;
+  const filePath = getResumeS3Path({
+    jobId: profile.jobId,
+    applicationId: id,
+    email: profile.email,
+    fileName: profile.resume.name,
+  });
 
   const profileDetails: Record<string, string | boolean> = {
     id,
@@ -30,7 +36,7 @@ export const submitApplication = async (profile: ProfileSchemaServer) => {
 
   const isUploaded = await uploadFile(profile.resume, filePath);
   if (isUploaded) {
-    profileDetails.resume = filePath;
+    profileDetails.resume = `${s3BaseUrl}/${filePath}`;
   }
 
   const res = await collection.insertOne(profileDetails);

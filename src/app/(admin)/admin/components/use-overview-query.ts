@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useOverviewQuery = () => {
   return useQuery({
-    queryKey: ["admin-overview"],
+    queryKey: ["admin", "overview"],
     queryFn: () => getOverview(),
   });
 };

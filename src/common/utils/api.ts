@@ -76,14 +76,20 @@ export type ApplicationsResponse = {
   applications: Application[];
 };
 
-export const getApplications = async (limit: number, offset: number) => {
+export const getApplications = async () => {
   const reqUrl = "/admin/api/applications";
   const res = await axios.get<ApplicationsResponse>(reqUrl, {
-    params: {
-      limit,
-      offset,
-    },
+    params: {},
   });
 
   return res.data.applications;
+};
+
+export const deleteApplication = async (applicationId: string) => {
+  const reqUrl = "/admin/api/application";
+  const res = await axios
+    .delete(reqUrl, {
+      params: { applicationId },
+    })
+    .catch(console.error);
 };

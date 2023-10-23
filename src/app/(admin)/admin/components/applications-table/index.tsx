@@ -1,11 +1,13 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type TableOptions,
 } from "@tanstack/react-table";
 
 import { useApplicationsQuery } from "../use-applications-query";
@@ -19,16 +21,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { columns } from "./columns";
-import { useMemo } from "react";
+
+import type { Application } from "@/utils/schema";
 
 const ApplicationListTable = () => {
   const { data, isLoading } = useApplicationsQuery();
-  const tableConfig = useMemo(
+  const tableConfig: TableOptions<Application> = useMemo(
     () => ({
-      data: data?.pages.flat() || [],
       columns,
+      data: data || [],
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
       getSortedRowModel: getSortedRowModel(),

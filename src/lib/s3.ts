@@ -1,7 +1,6 @@
+import { s3BaseUrl } from "@/utils/routes";
 import { S3, PutObjectCommand } from "@aws-sdk/client-s3";
 import type { DeleteObjectsCommandInput, PutObjectCommandInput } from "@aws-sdk/client-s3";
-
-const s3BaseUrl = "";
 
 const s3Region = "us-east-1";
 const bucket = process.env.AWS_S3_BUCKET_NAME;

@@ -1,23 +1,21 @@
+import { useState } from "react";
 import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { ChevronDown, ChevronUp, Dot, ExternalLink, MoreHorizontal } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink, Loader2, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { APPLICATION_STATUS, type Application } from "@/utils/schema";
 import { getApplicationRoute } from "@/utils/routes";
+import { deleteApplication } from "@/utils/api";
+import { type Application } from "@/utils/schema";
+import { queryClient } from "@/app/components/query-client";
 
 export const sortIcons = {
   asc: <ChevronDown className="h-4 w-4" />,
@@ -115,7 +113,8 @@ export const columns: ColumnDef<Application>[] = [
     header: "",
     accessorKey: "id",
     cell: ({ row }) => {
-      const { status, id } = row.original;
+      const { id } = row.original;
+      const [isLoading, setIsLoading] = useState(false);
 
       return (
         <DropdownMenu>
@@ -127,25 +126,21 @@ export const columns: ColumnDef<Application>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => {}}>Delete</DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="capitalize">{status}</DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent className="capitalize">
-                  {APPLICATION_STATUS.map((s) => (
-                    <DropdownMenuItem
-                      key={s}
-                      className="flex items-center justify-between"
-                      onClick={() => {}}
-                    >
-                      {status} {s === status && <Dot />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
+            <DropdownMenuItem
+              onClick={async () => {
+                setIsLoading(true);
+                await deleteApplication(id);
+                queryClient.refetchQueries({
+                  queryKey: ["admin"],
+                });
+                setIsLoading(false);
+              }}
+              disabled={isLoading}
+              className="flex items-center gap-2"
+            >
+              Delete
+              {isLoading && <Loader2 className="w-3.5 animate-spin" />}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
