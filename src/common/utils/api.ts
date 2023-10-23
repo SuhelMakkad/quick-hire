@@ -59,3 +59,15 @@ export const submitProfile = async (profile: FormData) => {
     return error;
   }
 };
+
+export type OverviewResponse = {
+  totalJobs: number;
+  totalApplication: number;
+};
+
+export const getOverview = async () => {
+  const reqUrl = "/admin/api/overview";
+  const res = await axios.get<OverviewResponse>(reqUrl);
+
+  return res.data;
+};
