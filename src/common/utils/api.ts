@@ -61,8 +61,8 @@ export const submitProfile = async (profile: FormData) => {
 };
 
 export type OverviewResponse = {
-  totalJobs: number;
-  totalApplication: number;
+  jobs: { total: number };
+  applications: { total: number; new: number; shortlisted: number };
 };
 
 export const getOverview = async () => {

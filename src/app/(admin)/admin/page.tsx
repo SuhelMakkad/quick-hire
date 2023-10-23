@@ -5,7 +5,7 @@ const AdminPage = () => {
   return (
     <main className="container my-4">
       <section>
-        <span className="block mb-2 text-xs md:text-sm font-medium">Overview</span>
+        <span className="block mb-2 text-xs md:text-sm font-medium">Applications Overview</span>
         <OverviewSection />
       </section>
 
