@@ -25,6 +25,7 @@ import { addJobPost } from "@/utils/api";
 import { Loader2, Plus, Trash } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
+import { queryClient } from "@/app/components/query-client";
 
 export type CreateJobFormProps = { job?: JobWithId | null };
 
@@ -93,6 +94,10 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
 
       return;
     }
+
+    queryClient.refetchQueries({
+      queryKey: ["jobs"],
+    });
 
     toast({
       title: "Oh no! Something is not right",

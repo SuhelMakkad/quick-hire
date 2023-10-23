@@ -129,7 +129,7 @@ export const columns: ColumnDef<Omit<JobWithId, "description">>[] = [
 
                 await deleteJob(id);
                 queryClient.refetchQueries({
-                  queryKey: ["admin"],
+                  queryKey: ["admin", "jobs"],
                 });
                 setIsLoading(false);
               }}
