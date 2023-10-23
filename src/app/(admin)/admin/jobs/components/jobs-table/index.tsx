@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/table";
 import { columns } from "./columns";
 
-import type { Application, JobWithId } from "@/utils/schema";
+import type { JobWithId } from "@/utils/schema";
 
 const JobsTable = () => {
   const { data, isLoading } = useJobsQuery();

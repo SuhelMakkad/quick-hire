@@ -85,9 +85,19 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
       router.replace(getEditJobPostRoute(res.jobId));
       return;
     }
+    if (res.message) {
+      toast({
+        title: res.message,
+        variant: "destructive",
+      });
 
-    // tost error return
-    console.log(data);
+      return;
+    }
+
+    toast({
+      title: "Oh no! Something is not right",
+      variant: "destructive",
+    });
   };
 
   return (

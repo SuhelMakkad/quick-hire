@@ -126,7 +126,6 @@ export const columns: ColumnDef<Omit<JobWithId, "description">>[] = [
               className="flex items-center gap-2"
               onClick={async () => {
                 setIsLoading(true);
-                console.log(id);
 
                 await deleteJob(id);
                 queryClient.refetchQueries({
