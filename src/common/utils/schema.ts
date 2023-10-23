@@ -1,9 +1,14 @@
 import * as z from "zod";
 
+export const APPLICATION_STATUS = ["new", "rejected", "shortlisted"] as const;
+
+export type ApplicationStatus = (typeof APPLICATION_STATUS)[number];
+
 export type Application = Omit<ProfileSchemaServer, "resume"> & {
   id: string;
   resume: string;
   timestamp: string;
+  status: ApplicationStatus;
 };
 
 export type JobSchema = z.infer<typeof jobSchema>;

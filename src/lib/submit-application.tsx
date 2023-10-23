@@ -19,6 +19,7 @@ export const submitApplication = async (profile: ProfileSchemaServer) => {
   const profileDetails: Record<string, string | boolean> = {
     id,
     timestamp: new Date().toISOString(),
+    status: "new",
   };
 
   Object.entries(profile).forEach(([key, value]) => {
