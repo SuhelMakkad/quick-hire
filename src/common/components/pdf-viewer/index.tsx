@@ -14,10 +14,10 @@ const getBlobUrlFromUrl = async (src: string) => {
 };
 
 const PdfViewer = ({ src }: PdfViewerProps) => {
-  const [blogSrc, setBlogSrc] = useState<string>("");
+  const [blogSrc, setBlogSrc] = useState<string | undefined>("");
 
   useEffect(() => {
-    getBlobUrlFromUrl(src).then(setBlogSrc);
+    getBlobUrlFromUrl(src).then((s) => setBlogSrc(s));
   }, [src]);
 
   if (!blogSrc) return;
@@ -26,8 +26,6 @@ const PdfViewer = ({ src }: PdfViewerProps) => {
     <embed
       src={`https://mozilla.github.io/pdf.js/web/viewer.html?file=${blogSrc}`}
       type="application/pdf"
-      frameBorder="0"
-      scrolling="auto"
       height="100%"
       width="100%"
     />
