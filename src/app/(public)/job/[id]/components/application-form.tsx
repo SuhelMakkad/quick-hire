@@ -1,14 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,42 +15,64 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const formSchema = z.object({
-  firstName: z.string().min(2).max(50),
-  lastName: z.string().min(2).max(50),
-  email: z.string().email(),
-  phone: z.string().min(4).max(20),
-  linkedin: z.string({ required_error: "Please enter a valid url" }).trim().url().optional(),
-  github: z.string({ required_error: "Please enter a valid url" }).trim().url().optional(),
-  contactForFutureOpp: z.boolean().default(false).optional(),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
+import { profileSchemaClient, type ProfileSchemaClient } from "@/utils/schema";
+import { submitProfile } from "@/utils/api";
 
 export type ApplicationFormProps = { jobId: string };
 
 const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+  const formRef = useRef<HTMLFormElement>(null);
+  const form = useForm<ProfileSchemaClient>({
+    resolver: zodResolver(profileSchemaClient),
     defaultValues: {
+      jobId,
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
-      linkedin: undefined,
-      github: undefined,
+      linkedin: "",
+      github: "",
       contactForFutureOpp: false,
     },
   });
 
-  const onSubmit = (data: FormSchema) => {
-    console.log(data);
+  const onSubmit = async (data: ProfileSchemaClient) => {
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
+    const res = await submitProfile(formData);
+    if (res.status === "success") {
+      // success toast
+      return;
+    }
+
+    // res.message
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-8">
+      <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-8">
+        <FormField
+          control={form.control}
+          name="jobId"
+          render={({ field }) => <Input type="hidden" {...field} value={jobId} />}
+        />
+
+        <FormItem className="col-span-2">
+          <FormLabel>Resume</FormLabel>
+          <FormControl>
+            <Input
+              type="file"
+              accept="application/pdf"
+              {...form.register("resume", { required: true })}
+            />
+          </FormControl>
+
+          {!!form.getFieldState("resume").error && (
+            <FormMessage>{form.getFieldState("resume").error?.message}</FormMessage>
+          )}
+        </FormItem>
+
         <FormField
           control={form.control}
           name="firstName"

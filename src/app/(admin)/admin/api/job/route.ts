@@ -4,11 +4,9 @@ import { v4 as uuid } from "uuid";
 
 import { getDb } from "@/lib/db";
 import { jobSchema, type JobWithId } from "@/utils/schema";
-import type { PostErrorJobResponse, PostJobResponse } from "@/utils/api";
+import type { ErrorResponse, PostJobResponse } from "@/utils/api";
 
-export async function POST(
-  req: Request
-): Promise<NextResponse<PostJobResponse | PostErrorJobResponse>> {
+export async function POST(req: Request): Promise<NextResponse<PostJobResponse | ErrorResponse>> {
   try {
     const reqJson = await req.json();
 

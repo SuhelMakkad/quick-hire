@@ -1,14 +1,15 @@
 import axios from "axios";
 import type { JobSchema, JobWithId } from "./schema";
 
-export type PostJobResponse = {
-  status: "success";
-  jobId: string;
-};
-export type PostErrorJobResponse = {
+export type ErrorResponse = {
   status: "failed";
   error: unknown;
   message: string;
+};
+
+export type PostJobResponse = {
+  status: "success";
+  jobId: string;
 };
 
 export const addJobPost = async (job: JobSchema) => {
@@ -17,7 +18,7 @@ export const addJobPost = async (job: JobSchema) => {
     const res = await axios.post<PostJobResponse>(reqUrl, job);
     return res.data;
   } catch (e) {
-    const error = e as PostErrorJobResponse;
+    const error = e as ErrorResponse;
     return error;
   }
 };
@@ -36,4 +37,20 @@ export const getJobs = async (limit: number, offset: number) => {
     },
   });
   return res.data.jobs;
+};
+
+export type ApplyResponse = {
+  status: "success";
+  applicationId: string;
+};
+
+export const submitProfile = async (profile: FormData) => {
+  const reqUrl = "/api/apply";
+  try {
+    const res = await axios.post<ApplyResponse>(reqUrl, profile);
+    return res.data;
+  } catch (e) {
+    const error = e as ErrorResponse;
+    return error;
+  }
 };
