@@ -188,18 +188,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
         />
 
         <FormItem className="col-span-4">
-          <FormLabel className="flex items-center gap-2">
-            Categories
-            <Button
-              type="button"
-              size="icon"
-              variant="outline"
-              className="h-6 w-6"
-              onClick={() => appendCategory({ label: "" })}
-            >
-              <Plus className="w-3.5" />
-            </Button>
-          </FormLabel>
+          <FormLabel className="flex items-center gap-2">Categories</FormLabel>
           {categoryFields.map((field, index) => (
             <div key={field.id} className="flex items-center gap-1">
               <Input
@@ -207,7 +196,17 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
                 className="grow"
                 {...form.register(`categories.${index}.label`)}
               />
-              {index > 0 && (
+              {index === categoryFields.length - 1 ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="shrink-0 w-8 h-8"
+                  size="icon"
+                  onClick={() => appendCategory({ label: "" })}
+                >
+                  <Plus className="w-4" />
+                </Button>
+              ) : (
                 <Button
                   type="button"
                   variant="destructive"
@@ -224,18 +223,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
         </FormItem>
 
         <FormItem className="col-span-4">
-          <FormLabel className="flex items-center gap-2">
-            Locations
-            <Button
-              type="button"
-              size="icon"
-              variant="outline"
-              className="h-6 w-6"
-              onClick={() => appendLocation({ label: "" })}
-            >
-              <Plus className="w-3.5" />
-            </Button>
-          </FormLabel>
+          <FormLabel className="flex items-center gap-2">Locations</FormLabel>
 
           {locationFields.map((field, index) => (
             <div key={field.id} className="flex items-center gap-1">
@@ -244,7 +232,17 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
                 className="grow"
                 {...form.register(`locations.${index}.label`)}
               />
-              {index > 0 && (
+              {index === locationFields.length - 1 ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="shrink-0 w-8 h-8"
+                  size="icon"
+                  onClick={() => appendLocation({ label: "" })}
+                >
+                  <Plus className="w-4" />
+                </Button>
+              ) : (
                 <Button
                   type="button"
                   variant="destructive"
