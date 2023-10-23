@@ -8,9 +8,9 @@ export async function GET(req: Request): Promise<NextResponse<OverviewResponse>>
   const [totalJobs, totalApplication, newApplications, shortlistedApplications] = await Promise.all(
     [
       db.collection("jobs").countDocuments(),
-      db.collection("application").countDocuments(),
-      db.collection("application").countDocuments({ status: "new" }),
-      db.collection("application").countDocuments({ status: "shortlisted" }),
+      db.collection("applications").countDocuments(),
+      db.collection("applications").countDocuments({ status: "new" }),
+      db.collection("applications").countDocuments({ status: "shortlisted" }),
     ]
   );
 

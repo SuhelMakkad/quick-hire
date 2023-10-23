@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import type { JobSchema, JobWithId } from "./schema";
+import type { Application, JobSchema, JobWithId } from "./schema";
 
 export type ErrorResponse = {
   status: "failed";
@@ -70,4 +70,20 @@ export const getOverview = async () => {
   const res = await axios.get<OverviewResponse>(reqUrl);
 
   return res.data;
+};
+
+export type ApplicationsResponse = {
+  applications: Application[];
+};
+
+export const getApplications = async (limit: number, offset: number) => {
+  const reqUrl = "/admin/api/applications";
+  const res = await axios.get<ApplicationsResponse>(reqUrl, {
+    params: {
+      limit,
+      offset,
+    },
+  });
+
+  return res.data.applications;
 };

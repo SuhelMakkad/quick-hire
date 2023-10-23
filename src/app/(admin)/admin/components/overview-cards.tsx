@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart2, Check, Users } from "lucide-react";
+import { BarChart2, CheckCircle2, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useOverviewQuery } from "./use-overview-query";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -51,7 +51,7 @@ const OverviewSection = ({}: OverviewSectionProps) => {
       <Card className="min-w-[16rem]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Shortlisted</CardTitle>
-          <Check className="h-4 w-4 text-muted-foreground" />
+          <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-xl md:text-2xl font-medium">{applications.shortlisted}</div>

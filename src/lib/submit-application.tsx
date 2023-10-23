@@ -5,7 +5,7 @@ import { uploadFile } from "./s3";
 
 export const submitApplication = async (profile: ProfileSchemaServer) => {
   const db = await getDb();
-  const collection = db.collection("application");
+  const collection = db.collection("applications");
 
   // check if already applied
   const count = await collection.countDocuments({ jobId: profile.jobId, email: profile.email });

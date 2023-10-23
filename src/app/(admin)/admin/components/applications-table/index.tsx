@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import {
   flexRender,
   getCoreRowModel,
@@ -10,8 +8,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Plus } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { useApplicationsQuery } from "../use-applications-query";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -23,29 +21,22 @@ import {
 } from "@/components/ui/table";
 
 import { columns } from "./columns";
+import { useMemo } from "react";
 
 const ApplicationListTable = () => {
-  const table = useReactTable({
-    data: [
-      {
-        id: "d23162bf-5f94-4f00-b990-255d4d77d1cf",
-        timestamp: "2023-10-23T06:44:56.955Z",
-        jobId: "7224aa1e-9d39-42ec-a8b5-38d805499c36",
-        firstName: "Suhel",
-        lastName: "Makkad",
-        email: "makadsuhel11@gmail.com",
-        phone: "+919723597577",
-        linkedin: "https://www.linkedin.com/in/suhel-makkad-606a3219b",
-        github: "https://github.com/SuhelMakkad",
-        resume: "asdfsdf",
-        status: "new",
-      },
-    ],
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+  const { data, isLoading } = useApplicationsQuery();
+  const tableConfig = useMemo(
+    () => ({
+      data: data?.pages.flat() || [],
+      columns,
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+    }),
+    [data]
+  );
+
+  const table = useReactTable(tableConfig);
 
   return (
     <div className="w-full">
@@ -89,7 +80,7 @@ const ApplicationListTable = () => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  {isLoading ? "Loading..." : "No results."}
                 </TableCell>
               </TableRow>
             )}
