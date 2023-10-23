@@ -20,13 +20,13 @@ import { Input } from "@/components/ui/input";
 import RichTextEditor from "@/components/rich-text-editor";
 import { useToast } from "@/components/ui/toast/use-toast";
 
-import { jobSchema, type JobSchema } from "@/utils/schema";
+import { jobSchema, type JobWithId, type JobSchema } from "@/utils/schema";
 import { addJobPost } from "@/utils/api";
 import { Loader2, Plus, Trash } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
 
-export type CreateJobFormProps = { jobId: string };
+export type CreateJobFormProps = { job?: JobWithId | null };
 
 const defaultValues = {
   title: "",
@@ -36,7 +36,7 @@ const defaultValues = {
   locations: [{ label: "" }],
 };
 
-const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
+const CreateJobForm = ({ job }: CreateJobFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
@@ -44,7 +44,7 @@ const CreateJobForm = ({ jobId }: CreateJobFormProps) => {
 
   const form = useForm<JobSchema>({
     resolver: zodResolver(jobSchema),
-    defaultValues: defaultValues,
+    defaultValues: job || defaultValues,
   });
 
   const {

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { getApplicationRoute, getJobDetailsRoute } from "@/utils/routes";
+import { getApplicationRoute, getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
 import { deleteJob } from "@/utils/api";
 import { type JobWithId } from "@/utils/schema";
 import { queryClient } from "@/app/components/query-client";
@@ -136,6 +136,10 @@ export const columns: ColumnDef<Omit<JobWithId, "description">>[] = [
             >
               Delete
               {isLoading && <Loader2 className="w-3.5 animate-spin" />}
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link href={getEditJobPostRoute(id)}>Edit</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

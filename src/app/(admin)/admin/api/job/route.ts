@@ -5,6 +5,8 @@ import { v4 as uuid } from "uuid";
 import { getDb } from "@/lib/db";
 import { jobSchema, type JobWithId } from "@/utils/schema";
 import type { ErrorResponse, PostJobResponse } from "@/utils/api";
+import { revalidatePath } from "next/cache";
+import { getJobDetailsRoute } from "@/utils/routes";
 
 export async function POST(req: Request): Promise<NextResponse<PostJobResponse | ErrorResponse>> {
   try {
@@ -20,6 +22,8 @@ export async function POST(req: Request): Promise<NextResponse<PostJobResponse |
     const db = await getDb();
     const jobsCollection = db.collection<JobWithId>("jobs");
     await jobsCollection.insertOne(newJob);
+
+    revalidatePath(getJobDetailsRoute(newJob.id));
 
     return NextResponse.json({ status: "success", jobId: newJob.id }, { status: 200 });
   } catch (e) {

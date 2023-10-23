@@ -1,8 +1,11 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { profileSchemaServer } from "@/utils/schema";
-import type { ApplyResponse, ErrorResponse } from "@/utils/api";
+
 import { submitApplication } from "@/lib/submit-application";
+import { profileSchemaServer } from "@/utils/schema";
+import { getApplicationRoute } from "@/utils/routes";
+import type { ApplyResponse, ErrorResponse } from "@/utils/api";
 
 export async function POST(req: Request): Promise<NextResponse<ApplyResponse | ErrorResponse>> {
   try {
@@ -12,6 +15,8 @@ export async function POST(req: Request): Promise<NextResponse<ApplyResponse | E
 
     const parsedData = profileSchemaServer.parse(data);
     const applicationId = await submitApplication(parsedData);
+
+    revalidatePath(getApplicationRoute(applicationId));
 
     return NextResponse.json({ status: "success", applicationId }, { status: 200 });
   } catch (e) {
