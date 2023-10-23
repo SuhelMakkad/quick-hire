@@ -22,14 +22,7 @@ const PdfViewer = ({ src }: PdfViewerProps) => {
 
   if (!blogSrc) return;
 
-  return (
-    <embed
-      src={`https://mozilla.github.io/pdf.js/web/viewer.html?file=${blogSrc}`}
-      type="application/pdf"
-      height="100%"
-      width="100%"
-    />
-  );
+  return <embed src={blogSrc} type="application/pdf" height="100%" width="100%" />;
 };
 
 export default PdfViewer;
