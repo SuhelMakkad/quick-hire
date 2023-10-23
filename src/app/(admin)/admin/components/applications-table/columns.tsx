@@ -98,9 +98,6 @@ export const columns: ColumnDef<Application>[] = [
       );
     },
     cell: ({ row }) => {
-      const resume = row.getValue("resume");
-      if (!resume) return "Not Found";
-
       return (
         <Link
           href={getResumeServerPath(row.getValue("id"))}
