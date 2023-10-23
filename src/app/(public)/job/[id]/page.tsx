@@ -9,7 +9,7 @@ import Chip from "@/components/ui/chip";
 import ApplicationForm from "./components/application-form";
 
 import { formateCurrency } from "@/utils/index";
-import { getJobDetails } from "@/lib/getJobDetails";
+import { getJobDetails } from "@/lib/get-Job-details";
 
 export type JobDetailsPageProps = {
   params: {
