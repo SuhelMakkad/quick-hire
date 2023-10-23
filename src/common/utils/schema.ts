@@ -65,3 +65,16 @@ export const profileSchemaServer = baseProfileSchema.extend({
     .refine((file) => file?.type === "application/pdf", "Must be a PDF.")
     .refine((file) => file?.size <= 3_000_000, `Max file size is 3MB.`),
 });
+
+export const loginSchema = z.object({
+  username: z.string().min(1).max(50),
+  password: z.string().min(3).max(50),
+});
+
+export type LoginSchema = z.infer<typeof loginSchema>;
+
+export type User = {
+  username: string;
+  passwordHash: string;
+  role: string;
+};
