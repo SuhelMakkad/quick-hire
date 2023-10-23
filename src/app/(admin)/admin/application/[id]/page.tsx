@@ -37,7 +37,7 @@ const ApplicationPage = async ({ params }: ApplicationPageProps) => {
 
   return (
     <main className="container my-8 max-w-lg mx-auto">
-      <div className="flex items-center justify-between">
+      <div className="flex md:items-center justify-between">
         <div>
           <h1 className="font-medium md:text-2xl text-lg capitalize">
             {application.firstName} {application.lastName}
