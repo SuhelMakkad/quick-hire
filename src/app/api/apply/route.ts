@@ -15,11 +15,12 @@ export async function POST(req: Request): Promise<NextResponse<ApplyResponse | E
 
     return NextResponse.json({ status: "success", applicationId }, { status: 200 });
   } catch (e) {
+    console.error("failed to accept application");
+    console.error(e);
+
     let err = e;
     let message = "";
     let status = 500;
-
-    console.log();
 
     if ((e as any).message === "applied") {
       message = "You have already applied to this job";
