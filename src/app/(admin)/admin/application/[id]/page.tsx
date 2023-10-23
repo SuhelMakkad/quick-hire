@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Download, GitMergeIcon, Github, Linkedin, Mail, Phone, Send } from "lucide-react";
+import { Download, Github, Linkedin, Mail, Phone, Send } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 
 import { getJobDetailsRoute, getResumeServerPath } from "@/utils/routes";
 import getApplicationDetails from "@/lib/get-application-details";
 import getApplicationIds from "@/lib/get-application-ids";
-import PdfViewer from "@/components/pdf-viewer";
-import { buttonVariants } from "@/components/ui/button";
 
 export type ApplicationPageProps = {
   params: {
@@ -97,25 +96,19 @@ const ApplicationPage = async ({ params }: ApplicationPageProps) => {
           )}
         </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-end">
-            <Link
-              target="_blank"
-              href={getResumeServerPath(application.id)}
-              className={buttonVariants({
-                size: "sm",
-                className: "flex items-center gap-2 justify-end ml-auto",
-              })}
-              download
-            >
-              <Download className="w-4" />
-              Resume
-            </Link>
-          </div>
-
-          <div className="h-[80vh]">
-            <PdfViewer src={getResumeServerPath(application.id)} />
-          </div>
+        <div>
+          <Link
+            target="_blank"
+            href={getResumeServerPath(application.id)}
+            className={buttonVariants({
+              size: "sm",
+              className: "flex items-center gap-2",
+            })}
+            download
+          >
+            <Download className="w-4" />
+            Resume
+          </Link>
         </div>
       </section>
     </main>
