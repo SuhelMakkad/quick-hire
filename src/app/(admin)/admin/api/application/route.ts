@@ -1,6 +1,10 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+
 import { getDb } from "@/lib/db";
 import { deleteObject } from "@/lib/s3";
+
+import { getApplicationRoute } from "@/utils/routes";
 import type { Application } from "@/utils/schema";
 
 export async function DELETE(req: Request) {
@@ -32,6 +36,8 @@ export async function DELETE(req: Request) {
 
   const filePath = application.resume;
   await deleteObject(filePath);
+
+  revalidatePath(getApplicationRoute(applicationId));
 
   return NextResponse.json({ status: "success" }, { status: 200 });
 }

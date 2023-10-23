@@ -30,3 +30,6 @@ export const getResumeS3Path = ({
   email: string;
   fileName: string;
 }) => `${jobId}/${email}/${applicationId}__${fileName}`;
+
+export const getResumeServerPath = (applicationId: string) =>
+  `/admin/api/resume?applicationId=${applicationId}`;

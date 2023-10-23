@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { queryClient } from "@/app/components/query-client";
 import { ChevronDown, ChevronUp, ExternalLink, Loader2, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
@@ -12,10 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { getApplicationRoute } from "@/utils/routes";
+import { getApplicationRoute, getResumeServerPath } from "@/utils/routes";
 import { deleteApplication } from "@/utils/api";
 import { type Application } from "@/utils/schema";
-import { queryClient } from "@/app/components/query-client";
 
 export const sortIcons = {
   asc: <ChevronDown className="h-4 w-4" />,
@@ -84,7 +84,7 @@ export const columns: ColumnDef<Application>[] = [
     ),
   },
   {
-    accessorKey: "resume",
+    accessorKey: "id",
     header: ({ column }) => {
       const sortedBy = column.getIsSorted();
       return (
@@ -102,7 +102,11 @@ export const columns: ColumnDef<Application>[] = [
       if (!resume) return "Not Found";
 
       return (
-        <Link href={resume} target="_blank" className="flex items-center gap-2 hover:underline">
+        <Link
+          href={getResumeServerPath(row.getValue("id"))}
+          target="_blank"
+          className="flex items-center gap-2 hover:underline"
+        >
           Resume
           <ExternalLink className="w-3.5" />
         </Link>

@@ -1,6 +1,11 @@
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import type {
+  DeleteObjectsCommandInput,
+  GetObjectCommandInput,
+  PutObjectCommandInput,
+} from "@aws-sdk/client-s3";
 import { s3BaseUrl } from "@/utils/routes";
-import { S3, PutObjectCommand } from "@aws-sdk/client-s3";
-import type { DeleteObjectsCommandInput, PutObjectCommandInput } from "@aws-sdk/client-s3";
 
 const s3Region = "us-east-1";
 const bucket = process.env.AWS_S3_BUCKET_NAME;
@@ -33,6 +38,29 @@ export const uploadFile = async (file: File, filePath: string): Promise<boolean>
   } catch (err) {
     console.error("S3 upload error:", err);
     return false;
+  }
+};
+
+export const getPreSignedUrl = async (filePath: string) => {
+  let s3FilePath = filePath;
+  if (filePath.includes(s3BaseUrl)) {
+    s3FilePath = filePath.split(`${s3BaseUrl}/`)[1];
+  }
+
+  const params: GetObjectCommandInput = {
+    Bucket: bucket,
+    Key: s3FilePath,
+  };
+
+  try {
+    const command = new GetObjectCommand(params);
+    const res = await s3Client.send(command);
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+
+    return url;
+  } catch (err) {
+    console.error("S3 upload error:", err);
+    return;
   }
 };
 

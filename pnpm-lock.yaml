@@ -11,6 +11,9 @@ dependencies:
   '@aws-sdk/lib-storage':
     specifier: ^3.433.0
     version: 3.433.0(@aws-sdk/client-s3@3.433.0)
+  '@aws-sdk/s3-request-presigner':
+    specifier: ^3.433.0
+    version: 3.433.0
   '@ckeditor/ckeditor5-build-classic':
     specifier: ^40.0.0
     version: 40.0.0
@@ -591,6 +594,20 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@aws-sdk/s3-request-presigner@3.433.0:
+    resolution: {integrity: sha512-mR5+0iZH5GeRWAkRJKgCs4RN0RfS6/7sLgAJxItX+LL4O4jiGodYqm++RUvRqcZuZDGZ5wFs9CSMA++1YSxeew==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@aws-sdk/signature-v4-multi-region': 3.433.0
+      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/util-format-url': 3.433.0
+      '@smithy/middleware-endpoint': 2.1.3
+      '@smithy/protocol-http': 3.0.8
+      '@smithy/smithy-client': 2.1.12
+      '@smithy/types': 2.4.0
+      tslib: 2.6.2
+    dev: false
+
   /@aws-sdk/signature-v4-multi-region@3.433.0:
     resolution: {integrity: sha512-wl2j1dos4VOKFawbapPm/0CNa3cIgpJXbEx+sp+DI3G8tSuP3c5UGtm0pXjM85egxZulhHVK1RVde0iD8j63pQ==}
     engines: {node: '>=14.0.0'}
@@ -665,6 +682,16 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-sdk/types': 3.433.0
+      tslib: 2.6.2
+    dev: false
+
+  /@aws-sdk/util-format-url@3.433.0:
+    resolution: {integrity: sha512-Z6T7I4hELoQ4eeIuKIKx+52B9bc3SCPhjgMcFAFQeesjmHAr0drHyoGNJIat6ckvgI6zzFaeaBZTvWDA2hyDkA==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@aws-sdk/types': 3.433.0
+      '@smithy/querystring-builder': 2.0.12
+      '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
