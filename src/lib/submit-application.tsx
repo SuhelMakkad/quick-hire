@@ -9,7 +9,6 @@ export const submitApplication = async (profile: ProfileSchemaServer) => {
 
   // check if already applied
   const count = await collection.countDocuments({ jobId: profile.jobId, email: profile.email });
-  console.log(count);
   if (count > 0) {
     throw Error("applied");
   }
