@@ -100,3 +100,10 @@ export const deleteJob = async (jobId: string) => {
   const reqUrl = "/admin/api/job";
   await axios.delete(reqUrl, { params: { jobId } }).catch(console.error);
 };
+
+export const authenticate = async (username: string, password: string) => {
+  const reqUrl = "/api/auth/login";
+  const res = await axios.get(reqUrl, { params: { username, password } }).catch(console.error);
+
+  return res;
+};
