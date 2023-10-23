@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { getApplicationRoute } from "@/utils/routes";
-import { deleteApplication } from "@/utils/api";
-import { type Application } from "@/utils/schema";
+import { getApplicationRoute, getJobDetailsRoute } from "@/utils/routes";
+import { deleteJob } from "@/utils/api";
+import { type JobWithId } from "@/utils/schema";
 import { queryClient } from "@/app/components/query-client";
 
 export const sortIcons = {
@@ -22,9 +22,9 @@ export const sortIcons = {
   desc: <ChevronUp className="h-4 w-4" />,
 };
 
-export const columns: ColumnDef<Application>[] = [
+export const columns: ColumnDef<Omit<JobWithId, "description">>[] = [
   {
-    accessorKey: "timestamp",
+    accessorKey: "createdAt",
     header: ({ column }) => {
       const sortedBy = column.getIsSorted();
       return (
@@ -39,12 +39,12 @@ export const columns: ColumnDef<Application>[] = [
     },
     cell: ({ row }) => (
       <div className="capitalize">
-        {new Date(row.getValue("timestamp") as string).toLocaleString("en-us")}
+        {new Date(row.getValue("createdAt") as string).toLocaleString("en-us")}
       </div>
     ),
   },
   {
-    accessorKey: "firstName",
+    accessorKey: "title",
     header: ({ column }) => {
       const sortedBy = column.getIsSorted();
       return (
@@ -52,19 +52,24 @@ export const columns: ColumnDef<Application>[] = [
           className="flex items-center gap-2"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Title
           {sortedBy ? sortIcons[sortedBy] : <div className="w-4 h-4" />}
         </button>
       );
     },
     cell: ({ row }) => (
-      <Link className="capitalize hover:underline" href={getApplicationRoute(row.original.id)}>
-        {row.getValue("firstName")}
+      <Link
+        target="_blank"
+        className="flex items-center gap-2 capitalize hover:underline"
+        href={getJobDetailsRoute(row.original.id)}
+      >
+        {row.getValue("title")}
+        <ExternalLink className="w-3.5" />
       </Link>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "shortDescription",
     header: ({ column }) => {
       const sortedBy = column.getIsSorted();
       return (
@@ -72,42 +77,32 @@ export const columns: ColumnDef<Application>[] = [
           className="flex items-center gap-2"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          email
+          Experience
+          {sortedBy ? sortIcons[sortedBy] : <div className="w-4 h-4" />}
+        </button>
+      );
+    },
+    cell: ({ row }) => <div className="max-w-xs truncate">{row.getValue("shortDescription")}</div>,
+  },
+  {
+    accessorKey: "minExperience",
+    header: ({ column }) => {
+      const sortedBy = column.getIsSorted();
+      return (
+        <button
+          className="flex items-center gap-2"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Experience
           {sortedBy ? sortIcons[sortedBy] : <div className="w-4 h-4" />}
         </button>
       );
     },
     cell: ({ row }) => (
-      <Link className="hover:underline lowercase" href={getApplicationRoute(row.original.id)}>
-        {row.getValue("email")}
-      </Link>
+      <div className="flex items-center gap-2 capitalize">
+        {row.original.minExperience} - {row.original.maxExperience} Years
+      </div>
     ),
-  },
-  {
-    accessorKey: "resume",
-    header: ({ column }) => {
-      const sortedBy = column.getIsSorted();
-      return (
-        <button
-          className="flex items-center gap-2"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Resume
-          {sortedBy ? sortIcons[sortedBy] : <div className="w-4 h-4" />}
-        </button>
-      );
-    },
-    cell: ({ row }) => {
-      const resume = row.getValue("resume");
-      if (!resume) return "Not Found";
-
-      return (
-        <Link href={resume} target="_blank" className="flex items-center gap-2 hover:underline">
-          Resume
-          <ExternalLink className="w-3.5" />
-        </Link>
-      );
-    },
   },
   {
     header: "",
@@ -127,16 +122,18 @@ export const columns: ColumnDef<Application>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
+              disabled={isLoading}
+              className="flex items-center gap-2"
               onClick={async () => {
                 setIsLoading(true);
-                await deleteApplication(id);
+                console.log(id);
+
+                await deleteJob(id);
                 queryClient.refetchQueries({
                   queryKey: ["admin"],
                 });
                 setIsLoading(false);
               }}
-              disabled={isLoading}
-              className="flex items-center gap-2"
             >
               Delete
               {isLoading && <Loader2 className="w-3.5 animate-spin" />}

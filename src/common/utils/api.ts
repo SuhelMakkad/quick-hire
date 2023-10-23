@@ -93,3 +93,8 @@ export const deleteApplication = async (applicationId: string) => {
     })
     .catch(console.error);
 };
+
+export const deleteJob = async (jobId: string) => {
+  const reqUrl = "/admin/api/job";
+  await axios.delete(reqUrl, { params: { jobId } }).catch(console.error);
+};

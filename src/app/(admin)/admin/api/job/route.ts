@@ -43,3 +43,19 @@ export async function POST(req: Request): Promise<NextResponse<PostJobResponse |
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const url = new URL(req.url);
+  console.log(url);
+  const jobId = url.searchParams.get("jobId")?.toString();
+
+  if (!jobId) {
+    return NextResponse.json({ status: "failed", message: "job id not provided" }, { status: 409 });
+  }
+
+  const db = await getDb();
+  const collection = db.collection<JobWithId>("jobs");
+  const res = await collection.deleteOne({ id: jobId });
+  console.log(res);
+  return NextResponse.json({ status: "success" }, { status: 200 });
+}

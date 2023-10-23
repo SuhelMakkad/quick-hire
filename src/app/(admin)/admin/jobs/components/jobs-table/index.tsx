@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/table";
 import { columns } from "./columns";
 
-import type { Application } from "@/utils/schema";
+import type { Application, JobWithId } from "@/utils/schema";
 
 const JobsTable = () => {
   const { data, isLoading } = useJobsQuery();
-  const tableConfig: TableOptions<Application> = useMemo(
+  const tableConfig: TableOptions<Omit<JobWithId, "description">> = useMemo(
     () => ({
       columns,
       data: data || [],
@@ -44,9 +44,9 @@ const JobsTable = () => {
     <div className="w-full">
       <div className="flex items-center mb-4 justify-between gap-2">
         <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("firstName")?.setFilterValue(event.target.value)}
+          placeholder="Filter title..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
       </div>

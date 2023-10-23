@@ -72,7 +72,7 @@ export const columns: ColumnDef<Application>[] = [
           className="flex items-center gap-2"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          email
+          Email
           {sortedBy ? sortIcons[sortedBy] : <div className="w-4 h-4" />}
         </button>
       );
@@ -127,6 +127,8 @@ export const columns: ColumnDef<Application>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
+              disabled={isLoading}
+              className="flex items-center gap-2"
               onClick={async () => {
                 setIsLoading(true);
                 await deleteApplication(id);
@@ -135,8 +137,6 @@ export const columns: ColumnDef<Application>[] = [
                 });
                 setIsLoading(false);
               }}
-              disabled={isLoading}
-              className="flex items-center gap-2"
             >
               Delete
               {isLoading && <Loader2 className="w-3.5 animate-spin" />}
