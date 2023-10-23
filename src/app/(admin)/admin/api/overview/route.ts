@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import type { OverviewResponse } from "@/utils/api";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request): Promise<NextResponse<OverviewResponse>> {
   const db = await getDb();
 
