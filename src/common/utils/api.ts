@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { JobSchema, JobWithId } from "./schema";
 
 export type ErrorResponse = {
@@ -50,7 +50,12 @@ export const submitProfile = async (profile: FormData) => {
     const res = await axios.post<ApplyResponse>(reqUrl, profile);
     return res.data;
   } catch (e) {
-    const error = e as ErrorResponse;
+    const error = e as AxiosError;
+
+    if (error?.response?.data) {
+      console.log(error?.response?.data);
+      return error?.response?.data as ErrorResponse;
+    }
     return error;
   }
 };

@@ -1,9 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useToast } from "@/components/ui/toast/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,13 +18,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { profileSchemaClient, type ProfileSchemaClient } from "@/utils/schema";
+
+import { routes } from "@/utils/routes";
 import { submitProfile } from "@/utils/api";
+import { profileSchemaClient, type ProfileSchemaClient } from "@/utils/schema";
+import { Loader2 } from "lucide-react";
 
 export type ApplicationFormProps = { jobId: string };
 
 const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<ProfileSchemaClient>({
     resolver: zodResolver(profileSchemaClient),
     defaultValues: {
@@ -38,15 +49,30 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
 
   const onSubmit = async (data: ProfileSchemaClient) => {
     if (!formRef.current) return;
-
+    setIsLoading(true);
     const formData = new FormData(formRef.current);
     const res = await submitProfile(formData);
+    setIsLoading(false);
+
     if (res.status === "success") {
-      // success toast
+      form.reset(data);
+      router.push(routes.thankYou);
       return;
     }
 
-    // res.message
+    if (res.message) {
+      toast({
+        title: res.message,
+        variant: "destructive",
+      });
+
+      return;
+    }
+
+    toast({
+      title: "Oh no! Something is not right",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -170,8 +196,9 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
           )}
         />
 
-        <Button type="submit" className="col-span-2">
+        <Button type="submit" className="col-span-2" disabled={isLoading}>
           Submit
+          {isLoading && <Loader2 className="w-4 ml-2 animate-spin" />}
         </Button>
       </form>
     </Form>

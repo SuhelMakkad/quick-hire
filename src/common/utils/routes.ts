@@ -1,5 +1,6 @@
 export const routes = {
   home: "/",
+  thankYou: "/thank-you",
 };
 
 export const adminRoutes = {

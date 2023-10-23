@@ -1,5 +1,11 @@
 import * as z from "zod";
 
+export type Application = Omit<ProfileSchemaServer, "resume"> & {
+  id: string;
+  resume: string;
+  timestamp: string;
+};
+
 export type JobSchema = z.infer<typeof jobSchema>;
 
 export type JobWithId = JobSchema & {
