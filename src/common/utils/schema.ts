@@ -16,6 +16,7 @@ export type JobSchema = z.infer<typeof jobSchema>;
 export type JobWithId = JobSchema & {
   id: string;
   createdAt: string;
+  updatedAt: string;
 };
 
 const coerceNumberError = { invalid_type_error: "Must be a valid number" };

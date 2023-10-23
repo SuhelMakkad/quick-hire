@@ -67,7 +67,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
 
   const onSubmit = async (data: JobSchema) => {
     setIsLoading(true);
-    const res = await addJobPost(data);
+    const res = await addJobPost(data, job?.id || "new");
     setIsLoading(false);
 
     if (res.status === "success") {

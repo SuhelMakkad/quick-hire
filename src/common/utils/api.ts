@@ -12,10 +12,12 @@ export type PostJobResponse = {
   jobId: string;
 };
 
-export const addJobPost = async (job: JobSchema) => {
+export const addJobPost = async (job: JobSchema, jobId: string) => {
   const reqUrl = "/admin/api/job";
   try {
-    const res = await axios.post<PostJobResponse>(reqUrl, job);
+    const res = await axios.post<PostJobResponse>(reqUrl, job, {
+      headers: { "x-job-id": jobId },
+    });
     return res.data;
   } catch (e) {
     const error = e as ErrorResponse;

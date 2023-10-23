@@ -7,25 +7,19 @@ import { jobSchema, type JobWithId } from "@/utils/schema";
 import type { ErrorResponse, PostJobResponse } from "@/utils/api";
 import { revalidatePath } from "next/cache";
 import { getJobDetailsRoute } from "@/utils/routes";
+import createUpdateJob from "@/lib/create-update-job";
 
 export async function POST(req: Request): Promise<NextResponse<PostJobResponse | ErrorResponse>> {
   try {
     const reqJson = await req.json();
+    const jobId = req.headers.get("x-job-id");
 
     const data = jobSchema.parse(reqJson);
-    const newJob: JobWithId = {
-      ...data,
-      id: uuid(),
-      createdAt: new Date().toISOString(),
-    };
+    const newJobId = await createUpdateJob(data, jobId);
 
-    const db = await getDb();
-    const jobsCollection = db.collection<JobWithId>("jobs");
-    await jobsCollection.insertOne(newJob);
+    revalidatePath(getJobDetailsRoute(newJobId));
 
-    revalidatePath(getJobDetailsRoute(newJob.id));
-
-    return NextResponse.json({ status: "success", jobId: newJob.id }, { status: 200 });
+    return NextResponse.json({ status: "success", jobId: newJobId }, { status: 200 });
   } catch (e) {
     let err = e;
     let message = "";
@@ -59,6 +53,8 @@ export async function DELETE(req: Request) {
   const db = await getDb();
   const collection = db.collection<JobWithId>("jobs");
   const res = await collection.deleteOne({ id: jobId });
+
+  revalidatePath(getJobDetailsRoute(jobId));
 
   return NextResponse.json({ status: "success" }, { status: 200 });
 }
