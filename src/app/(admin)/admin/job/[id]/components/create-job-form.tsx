@@ -7,6 +7,10 @@ import Link from "next/link";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { queryClient } from "@/app/components/query-client";
+import { Loader2, Plus, Trash } from "lucide-react";
+
+import { ToastAction } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,10 +26,7 @@ import { useToast } from "@/components/ui/toast/use-toast";
 
 import { jobSchema, type JobWithId, type JobSchema } from "@/utils/schema";
 import { addJobPost } from "@/utils/api";
-import { Loader2, Plus, Trash } from "lucide-react";
-import { ToastAction } from "@/components/ui/toast";
-import { getEditJobPostRoute, getJobDetailsRoute } from "@/utils/routes";
-import { queryClient } from "@/app/components/query-client";
+import { adminRoutes, getJobDetailsRoute } from "@/utils/routes";
 
 export type CreateJobFormProps = { job?: JobWithId | null };
 
@@ -83,7 +84,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
         ),
       });
 
-      router.replace(getEditJobPostRoute(res.jobId));
+      router.replace(adminRoutes.jobs);
       return;
     }
     if (res.message) {

@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast/use-toast";
 
 import { authenticate } from "@/utils/api";
-import { routes } from "@/utils/routes";
+import { adminRoutes } from "@/utils/routes";
 
 const formSchema = z.object({
   username: z.string({ required_error: "Please enter your user name" }).trim(),
@@ -47,7 +47,7 @@ const UserLoginForm = () => {
     setIsLoading(false);
 
     if (res) {
-      router.replace(routes.admin);
+      router.replace(adminRoutes.home);
     } else {
       toast({
         variant: "destructive",
