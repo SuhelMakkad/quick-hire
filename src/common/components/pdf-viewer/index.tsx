@@ -22,7 +22,7 @@ const PdfViewer = ({ src }: PdfViewerProps) => {
 
   if (!blogSrc) return;
 
-  return <embed src={blogSrc} type="application/pdf" height="100%" width="100%" />;
+  return <iframe src={blogSrc} height="100%" width="100%" />;
 };
 
 export default PdfViewer;
