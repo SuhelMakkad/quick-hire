@@ -12,7 +12,6 @@ import {
 
 import { useApplicationsQuery } from "./use-applications-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -42,15 +41,6 @@ const ApplicationListTable = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center mb-4 justify-between gap-2">
-        <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("firstName")?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-      </div>
-
       <div className="rounded-md border">
         <Table>
           <TableHeader>

@@ -12,7 +12,6 @@ import {
 
 import { useJobsQuery } from "./use-jobs-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -42,15 +41,6 @@ const JobsTable = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center mb-4 justify-between gap-2">
-        <Input
-          placeholder="Filter title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-      </div>
-
       <div className="rounded-md border">
         <Table>
           <TableHeader>
