@@ -14,6 +14,8 @@ export async function POST(req: Request): Promise<NextResponse<PostJobResponse |
     const reqJson = await req.json();
     const jobId = req.headers.get("x-job-id");
 
+    console.log({ jobId });
+
     const data = jobSchema.parse(reqJson);
     const newJobId = await createUpdateJob(data, jobId);
 
@@ -23,6 +25,8 @@ export async function POST(req: Request): Promise<NextResponse<PostJobResponse |
   } catch (e) {
     let err = e;
     let message = "";
+
+    console.error(e);
 
     if (err instanceof ZodError) {
       err = err.issues.map((e) => ({ path: e.path[0], message: e.message }));

@@ -14,7 +14,12 @@ const createUpdateJob = async (job: JobSchema, jobId?: string | null) => {
 
   const db = await getDb();
   const jobsCollection = db.collection<JobWithId>("jobs");
-  await jobsCollection.updateOne({ id: jobId }, newJob);
+  await jobsCollection.updateOne(
+    { id: jobId },
+    {
+      $set: newJob,
+    }
+  );
 
   return jobId;
 };
