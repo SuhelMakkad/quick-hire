@@ -10,12 +10,21 @@ import ApplicationForm from "./components/application-form";
 
 import { formateCurrency } from "@/utils/index";
 import { getJobDetails } from "@/lib/get-Job-details";
+import getJobIds from "@/lib/get-job-ids";
 
 export type JobDetailsPageProps = {
   params: {
     id: string;
   };
 };
+
+export async function generateStaticParams() {
+  const jobs = await getJobIds();
+
+  return jobs.map((job) => ({
+    id: job.id,
+  }));
+}
 
 export const dynamicParams = true;
 
