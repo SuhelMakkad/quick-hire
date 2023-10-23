@@ -10,7 +10,7 @@ import {
   type TableOptions,
 } from "@tanstack/react-table";
 
-import { useApplicationsQuery } from "./use-applications-query";
+import { useJobsQuery } from "./use-jobs-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,8 +25,8 @@ import { columns } from "./columns";
 
 import type { Application } from "@/utils/schema";
 
-const ApplicationListTable = () => {
-  const { data, isLoading } = useApplicationsQuery();
+const JobsTable = () => {
+  const { data, isLoading } = useJobsQuery();
   const tableConfig: TableOptions<Application> = useMemo(
     () => ({
       columns,
@@ -114,4 +114,4 @@ const ApplicationListTable = () => {
   );
 };
 
-export default ApplicationListTable;
+export default JobsTable;
