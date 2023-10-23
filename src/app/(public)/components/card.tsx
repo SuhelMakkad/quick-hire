@@ -12,7 +12,10 @@ export type CardProps = {
 };
 
 const Card = ({ job }: CardProps) => {
-  const locations = job.locations?.map((l) => l.label).join(", ");
+  const locations = job.locations
+    ?.map((l) => l.label)
+    .filter((l) => l)
+    .join(", ");
 
   return (
     <Link href={getJobDetailsRoute(job.id)}>
@@ -35,11 +38,14 @@ const Card = ({ job }: CardProps) => {
         </div>
 
         <ul className="flex items-center gap-2 text-xs capitalize mt-3 md:mt-2.5">
-          {job.categories.map((category) => (
-            <li key={category.label}>
-              <Chip>{category.label}</Chip>
-            </li>
-          ))}
+          {job.categories.map(
+            (category) =>
+              category?.label && (
+                <li key={category.label}>
+                  <Chip>{category.label}</Chip>
+                </li>
+              )
+          )}
         </ul>
 
         <p className="mt-4 line-clamp-3 md:line-clamp-2">{job.shortDescription}</p>

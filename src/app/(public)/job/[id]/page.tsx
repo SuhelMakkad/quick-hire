@@ -50,7 +50,10 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
     notFound();
   }
 
-  const locations = job.locations?.map((l) => l.label).join(", ");
+  const locations = job.locations
+    ?.map((l) => l.label)
+    .filter((l) => l)
+    .join(", ");
 
   return (
     <main className="container space-y-4 md:space-y-5 max-w-4xl mb-8">
@@ -68,11 +71,14 @@ const JobDetailsPage = async ({ params }: JobDetailsPageProps) => {
       </header>
 
       <ul className="flex items-center gap-2 text-xs capitalize mt-3 md:mt-2.5">
-        {job.categories.map((category) => (
-          <li key={category.label}>
-            <Chip>{category.label}</Chip>
-          </li>
-        ))}
+        {job.categories.map(
+          (category) =>
+            category?.label && (
+              <li key={category.label}>
+                <Chip>{category.label}</Chip>
+              </li>
+            )
+        )}
       </ul>
 
       <section>
