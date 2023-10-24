@@ -18,6 +18,7 @@ export async function GET(req: Request): Promise<NextResponse<GetJobsResponse>> 
   const jobs = await jobsCollection
     .find()
     .project<Omit<JobWithId, "description">>({ description: 0 })
+    .sort({ createdAt: -1 })
     .skip(offset)
     .limit(limit)
     .toArray();

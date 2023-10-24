@@ -9,7 +9,7 @@ export async function GET(req: Request): Promise<NextResponse<ApplicationsRespon
 
   const db = await getDb();
   const collection = db.collection<Application>("applications");
-  const applications = await collection.find().toArray();
+  const applications = await collection.find().sort({ timestamp: -1 }).toArray();
 
   return NextResponse.json({ applications }, { status: 200 });
 }
