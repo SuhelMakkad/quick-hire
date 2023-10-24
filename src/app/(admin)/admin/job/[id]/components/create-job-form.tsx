@@ -96,7 +96,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
       return;
     }
 
-    queryClient.refetchQueries({
+    await queryClient.refetchQueries({
       queryKey: ["jobs"],
     });
 

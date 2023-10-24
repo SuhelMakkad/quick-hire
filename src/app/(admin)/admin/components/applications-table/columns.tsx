@@ -132,10 +132,12 @@ export const columns: ColumnDef<Application>[] = [
               className="flex items-center gap-2"
               onClick={async () => {
                 setIsLoading(true);
-                await deleteApplication(id);
-                queryClient.refetchQueries({
-                  queryKey: ["admin", "applications"],
-                });
+                await Promise.allSettled([
+                  deleteApplication(id),
+                  queryClient.refetchQueries({
+                    queryKey: ["admin", "applications"],
+                  }),
+                ]);
                 setIsLoading(false);
               }}
             >
