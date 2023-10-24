@@ -12,12 +12,12 @@ const AdminPage = () => {
   return (
     <main className="container my-4">
       <section>
-        <span className="block mb-2 text-xs md:text-sm font-medium">Jobs Overview</span>
+        <span className="block mb-4 text-xs md:text-sm font-medium">Jobs Overview</span>
         <OverviewCards />
       </section>
 
       <section className="mt-8">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-4">
           <span className="block text-xs md:text-sm font-medium">Posted Jobs</span>
           <Link
             title="Add new job"
@@ -27,10 +27,10 @@ const AdminPage = () => {
                 variant: "outline",
                 size: "icon",
               }),
-              "w-6 h-6 px-0"
+              "w-6 md:w-7 h-6 md:h-7 px-0"
             )}
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3.5 md:w-4 h-3.5 md:h-4" />
           </Link>
         </div>
 

@@ -20,7 +20,7 @@ const Navbar = ({ navLinks }: NavbarProps) => {
   const path = usePathname();
 
   return (
-    <nav className="container py-2 md:py-3 flex justify-between items-center sticky top-0 bg-background/50 backdrop-blur">
+    <nav className="z-10 container py-2 md:py-3 flex justify-between items-center sticky top-0 bg-background/50 backdrop-blur">
       <Logo />
 
       <div className="flex items-center gap-4">
