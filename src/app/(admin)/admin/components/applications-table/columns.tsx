@@ -18,8 +18,8 @@ import { deleteApplication } from "@/utils/api";
 import { type Application } from "@/utils/schema";
 
 export const sortIcons = {
-  asc: <ChevronDown className="h-4 w-4" />,
-  desc: <ChevronUp className="h-4 w-4" />,
+  desc: <ChevronDown className="h-4 w-4" />,
+  asc: <ChevronUp className="h-4 w-4" />,
 };
 
 export const columns: ColumnDef<Application>[] = [
