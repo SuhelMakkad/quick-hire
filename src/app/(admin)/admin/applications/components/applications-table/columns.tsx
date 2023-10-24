@@ -134,9 +134,7 @@ export const columns: ColumnDef<Application>[] = [
                 setIsLoading(true);
                 await Promise.allSettled([
                   deleteApplication(id),
-                  queryClient.refetchQueries({
-                    queryKey: ["admin", "applications"],
-                  }),
+                  queryClient.refetchQueries(),
                 ]);
                 setIsLoading(false);
               }}
