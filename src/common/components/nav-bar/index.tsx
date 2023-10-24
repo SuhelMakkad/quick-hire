@@ -13,15 +13,16 @@ export type NavLink = {
 };
 
 export type NavbarProps = {
+  lgoHref?: string;
   navLinks?: NavLink[];
 };
 
-const Navbar = ({ navLinks }: NavbarProps) => {
+const Navbar = ({ lgoHref, navLinks }: NavbarProps) => {
   const path = usePathname();
 
   return (
     <nav className="z-10 container py-2 md:py-3 flex justify-between items-center sticky top-0 bg-background/50 backdrop-blur">
-      <Logo />
+      <Logo href={lgoHref} />
 
       <div className="flex items-center gap-4">
         {navLinks && navLinks.length > 0 && (
@@ -46,9 +47,13 @@ const Navbar = ({ navLinks }: NavbarProps) => {
 
 export default Navbar;
 
-export const Logo = () => {
+export type LogoProps = {
+  href?: string;
+};
+
+export const Logo = ({ href }: LogoProps) => {
   return (
-    <Link href={"/"} className="flex items-center gap-1 md:gap-1.5 w-max">
+    <Link href={href || "/"} className="flex items-center gap-1 md:gap-1.5 w-max">
       <Zap className="w-4 md:w-5" strokeWidth={1.25} />
       <span className="md:text-lg">Quick Hire</span>
     </Link>
