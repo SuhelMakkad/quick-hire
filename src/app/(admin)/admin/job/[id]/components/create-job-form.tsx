@@ -68,13 +68,15 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
   });
 
   const onSubmit = async (data: JobSchema) => {
+    const jobId = job?.id || "new";
+
     setIsLoading(true);
-    const res = await addJobPost(data, job?.id || "new");
+    const res = await addJobPost(data, jobId);
     setIsLoading(false);
 
     if (res.status === "success") {
       toast({
-        title: "New Job Post Published!",
+        title: jobId === "new" ? "New Job Post Published!" : "Job Post Edited!",
         action: (
           <ToastAction altText="See New Job">
             <Link href={getJobDetailsRoute(res.jobId)} target="_blank">
