@@ -37,7 +37,7 @@ const Card = ({ job }: CardProps) => {
           )}
         </div>
 
-        <ul className="flex items-center gap-2 text-xs capitalize mt-3 md:mt-2.5">
+        <ul className="flex items-center gap-2 whitespace-nowrap overflow-y-auto hide-scroll text-xs capitalize mt-3 md:mt-2.5 py-1">
           {job.categories.map(
             (category) =>
               category?.label && (
