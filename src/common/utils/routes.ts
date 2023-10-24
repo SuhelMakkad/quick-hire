@@ -6,7 +6,7 @@ export const routes = {
 
 export const adminRoutes = {
   home: "/admin",
-  jobs: "/admin/jobs",
+  applications: "/admin/applications",
   postJob: "/admin/post-job",
 };
 

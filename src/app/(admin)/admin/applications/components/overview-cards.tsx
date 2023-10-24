@@ -23,7 +23,7 @@ const OverviewSection = ({}: OverviewSectionProps) => {
     return;
   }
 
-  const { jobs } = data;
+  const { applications } = data;
 
   return (
     <div className="flex lg:grid gap-4 grid-cols-4 overflow-auto hide-scroll">
@@ -33,7 +33,7 @@ const OverviewSection = ({}: OverviewSectionProps) => {
           <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-xl md:text-2xl font-medium">{jobs.total}</div>
+          <div className="text-xl md:text-2xl font-medium">{applications.total}</div>
         </CardContent>
       </Card>
     </div>

@@ -4,11 +4,11 @@ import { adminRoutes } from "@/utils/routes";
 const navLink: NavLink[] = [
   {
     href: adminRoutes.home,
-    label: "Applications",
+    label: "Jobs",
   },
   {
-    href: adminRoutes.jobs,
-    label: "Jobs",
+    href: adminRoutes.applications,
+    label: "Applications",
   },
 ];
 

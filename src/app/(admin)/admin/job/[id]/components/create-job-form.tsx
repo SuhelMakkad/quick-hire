@@ -84,7 +84,7 @@ const CreateJobForm = ({ job }: CreateJobFormProps) => {
         ),
       });
 
-      router.replace(adminRoutes.jobs);
+      router.replace(adminRoutes.home);
       return;
     }
     if (res.message) {
